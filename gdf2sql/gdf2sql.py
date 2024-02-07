@@ -59,10 +59,8 @@ class VTable:
 
 
 def build_vtable(tablename: str, gdf: gpd.GeoDataFrame) -> VTable:
-    inner_rows = [build_vrow(tuple) for tuple in gdf.itertuples()]
-    rows = VRows(rows=inner_rows)
     return VTable(header=VHeader(tablename=tablename, colnames=gdf.columns),
-                  rows=rows)
+                  rows=VRows(rows=[build_vrow(tuple) for tuple in gdf.itertuples()]))
 
 
 def build_vrow(tuple):
