@@ -23,7 +23,9 @@ class GDF2SQLTest(unittest.TestCase):
         self.assertIsNotNone(gdf)
         table = build_vtable("city_amlat", gdf)
         self.assertIsNotNone(table.rows)
-        self.assertIsNotNone(str(table))
+        result = str(table)
+        self.assertIsNotNone(result)
+        self.assertTrue("VALUES" in result)
 
 
 
