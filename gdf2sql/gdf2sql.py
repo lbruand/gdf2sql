@@ -66,3 +66,8 @@ def build_vtable(tablename: str, gdf: gpd.GeoDataFrame) -> VTable:
 def build_vrow(tuple):
     values = [VValue(v) for k, v in tuple._asdict().items() if k != 'Index']
     return VRow(values=values)
+
+
+def build_test_sql_query(tables: List[VTable], inner_query: str):
+    tables_str = ", ".join(str(table) for table in tables)
+    print(f"WITH {tables_str}, INNERQUERY as ({inner_query}) SELECT * FROM INNERQUERY")

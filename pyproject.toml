@@ -8,6 +8,8 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.10"
 geopandas = "^0.14.3"
+sqlparse = "^0.4.4"
+parametrized = "^66.0.2"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^6.0.0"
