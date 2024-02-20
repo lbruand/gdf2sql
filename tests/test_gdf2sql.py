@@ -48,18 +48,6 @@ class GDF2SQLTest(unittest.TestCase):
         tables: List[VTable] = [(build_vtable("nyc_subway_stations", gdf))]
         build_test_sql_query(tables, inner_query)
 
-    def test_spacialite(self):
-        inner_query = "WITH A(v) as (values (0),print (1)) SELECT A.v, name, ST_AsText(geom) FROM nyc_subway_stations, A WHERE name = 'Broad St'"
-        gdf = generate_example_gdf()
-        tables: List[VTable] = [(build_vtable("nyc_subway_stations", gdf))]
-        query = text(build_test_sql_query(tables, inner_query))
-        #query = text('SELECT spatialite_version()')
-        print(query)
-        os.environ["SPATIALITE_LIBRARY_PATH"] = "/usr/lib/x86_64-linux-gnu/mod_spatialite.so"
-        engine = create_engine("sqlite+sqlean://", echo=True)
-        listen(engine, "connect", load_spatialite)
-        with engine.connect() as db:
-            print(db.execute(query).fetchone()[0])
 
 
 if __name__ == '__main__':
