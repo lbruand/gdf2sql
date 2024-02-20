@@ -33,8 +33,11 @@ def test_gdf2sql():
     assert "VALUES" in result
     assert "'Buenos Aires'" in result
 
+
 def test_inject_queries():
-    inner_query = "WITH A(v) as (values (0), (1)) SELECT A.v, name, ST_AsText(geom) FROM nyc_subway_stations, A WHERE name = 'Broad St'"
+    inner_query = "WITH A(v) as (values (0), (1)) SELECT A.v, name, ST_AsText(geom)" \
+                  " FROM nyc_subway_stations, A " \
+                  "WHERE name = 'Broad St'"
     gdf = generate_example_gdf()
     tables: List[VTable] = [(build_vtable("nyc_subway_stations", gdf))]
     result_query = build_test_sql_query(tables, inner_query)
