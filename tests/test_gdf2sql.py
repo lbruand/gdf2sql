@@ -3,6 +3,7 @@ from typing import List
 
 import geopandas as gpd
 import pandas as pd
+import spatialite
 
 from gdf2sql.gdf2sql import build_vtable, VTable, build_test_sql_query
 
@@ -39,6 +40,10 @@ class GDF2SQLTest(unittest.TestCase):
         gdf = generate_example_gdf()
         tables: List[VTable] = [(build_vtable("nyc_subway_stations", gdf))]
         build_test_sql_query(tables, inner_query)
+
+    def test_spacialite(self):
+        with spatialite.connect('sl_temp.db') as db:
+            print(db.execute('SELECT spatialite_version()').fetchone()[0])
 
 
 if __name__ == '__main__':
