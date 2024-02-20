@@ -23,24 +23,19 @@ def generate_example_gdf() -> gpd.GeoDataFrame:
     return gdf
 
 
-class GDF2SQLTest(unittest.TestCase):
-    def test_gdf2sql(self):
-        gdf = generate_example_gdf()
-        self.assertIsNotNone(gdf)
-        table = build_vtable("city_amlat", gdf)
-        self.assertIsNotNone(table.rows)
-        result = str(table)
-        self.assertIsNotNone(result)
-        self.assertTrue("VALUES" in result)
-        self.assertTrue("'Buenos Aires'" in result)
+def test_gdf2sql():
+    gdf = generate_example_gdf()
+    assert gdf is not None
+    table = build_vtable("city_amlat", gdf)
+    assert table.rows is not None
+    result = str(table)
+    assert result is not None
+    assert "VALUES" in result
+    assert "'Buenos Aires'" in result
 
-    def test_inject_queries(self):
-        inner_query = "WITH A(v) as (values (0), (1)) SELECT A.v, name, ST_AsText(geom) FROM nyc_subway_stations, A WHERE name = 'Broad St'"
-        gdf = generate_example_gdf()
-        tables: List[VTable] = [(build_vtable("nyc_subway_stations", gdf))]
-        build_test_sql_query(tables, inner_query)
-
-
-
-if __name__ == '__main__':
-    unittest.main()
+def test_inject_queries():
+    inner_query = "WITH A(v) as (values (0), (1)) SELECT A.v, name, ST_AsText(geom) FROM nyc_subway_stations, A WHERE name = 'Broad St'"
+    gdf = generate_example_gdf()
+    tables: List[VTable] = [(build_vtable("nyc_subway_stations", gdf))]
+    result_query = build_test_sql_query(tables, inner_query)
+    assert result_query is not None
