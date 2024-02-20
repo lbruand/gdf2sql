@@ -4,14 +4,6 @@ from typing import List
 import geopandas as gpd
 import pandas as pd
 
-from geoalchemy2 import load_spatialite
-
-from sqlalchemy import create_engine
-
-from sqlalchemy.event import listen
-
-from sqlalchemy import text
-import os
 from gdf2sql.gdf2sql import build_vtable, VTable, build_test_sql_query
 
 
