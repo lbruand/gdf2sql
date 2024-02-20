@@ -3,8 +3,15 @@ from typing import List
 
 import geopandas as gpd
 import pandas as pd
-import spatialite
 
+from geoalchemy2 import load_spatialite
+
+from sqlalchemy import create_engine
+
+from sqlalchemy.event import listen
+
+from sqlalchemy import text
+import os
 from gdf2sql.gdf2sql import build_vtable, VTable, build_test_sql_query
 
 
@@ -42,8 +49,17 @@ class GDF2SQLTest(unittest.TestCase):
         build_test_sql_query(tables, inner_query)
 
     def test_spacialite(self):
-        with spatialite.connect('sl_temp.db') as db:
-            print(db.execute('SELECT spatialite_version()').fetchone()[0])
+        inner_query = "WITH A(v) as (values (0),print (1)) SELECT A.v, name, ST_AsText(geom) FROM nyc_subway_stations, A WHERE name = 'Broad St'"
+        gdf = generate_example_gdf()
+        tables: List[VTable] = [(build_vtable("nyc_subway_stations", gdf))]
+        query = text(build_test_sql_query(tables, inner_query))
+        #query = text('SELECT spatialite_version()')
+        print(query)
+        os.environ["SPATIALITE_LIBRARY_PATH"] = "/usr/lib/x86_64-linux-gnu/mod_spatialite.so"
+        engine = create_engine("sqlite+sqlean://", echo=True)
+        listen(engine, "connect", load_spatialite)
+        with engine.connect() as db:
+            print(db.execute(query).fetchone()[0])
 
 
 if __name__ == '__main__':

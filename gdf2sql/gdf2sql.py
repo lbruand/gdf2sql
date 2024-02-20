@@ -70,4 +70,4 @@ def build_vrow(tuple):
 
 def build_test_sql_query(tables: List[VTable], inner_query: str):
     tables_str = ", ".join(str(table) for table in tables)
-    print(f"WITH {tables_str}, INNERQUERY as ({inner_query}) SELECT * FROM INNERQUERY")
+    return f"WITH {tables_str}, INNERQUERY as ({inner_query}) SELECT * FROM INNERQUERY"
