@@ -12,6 +12,7 @@ spatialite = "^0.0.3"
 sqlalchemy = "^2.0.25"
 geoalchemy2 = "^0.14.3"
 sqlean-py = "^3.45.1"
+sqlean-driver = "^0.1.1"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^6.0.0"
