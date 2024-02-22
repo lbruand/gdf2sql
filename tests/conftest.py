@@ -11,14 +11,13 @@ def check_container_isup(postgis_params):
     version_query = "select version();"
 
     for i in range(10):
-        delay = delay_base * (1 << i)
         try:
             with psycopg2.connect(**postgis_params) as connection:
                 with connection.cursor() as cur:
                     cur.execute(version_query)
             break
         except psycopg2.Error:
-            time.sleep(delay)
+            time.sleep(delay_base * (1 << i))
     else:
         pytest.fail("Failed to connect to postgresql in container")
 
