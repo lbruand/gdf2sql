@@ -8,7 +8,15 @@ from gdf2sql.gdf2sql import build_vtable, VTable, build_test_sql_query
 
 
 def generate_example_gdf() -> gpd.GeoDataFrame:
-    df = pd.DataFrame(
+    df = generate_example_df()
+    gdf = gpd.GeoDataFrame(
+        df, geometry=gpd.points_from_xy(df.Longitude, df.Latitude), crs="EPSG:4326"
+    )
+    return gdf
+
+
+def generate_example_df() -> pd.DataFrame:
+    return pd.DataFrame(
         {
             "name": ["Buenos Aires", "Brasilia", "Santiago", "Bogota", "Caracas"],
             "Country": ["Argentina", "Brazil", "Chile", "Colombia", "Venezuela"],
@@ -17,16 +25,24 @@ def generate_example_gdf() -> gpd.GeoDataFrame:
             "Longitude": [-58.66, -47.91, -70.66, -74.08, -66.86],
         }
     )
-    gdf = gpd.GeoDataFrame(
-        df, geometry=gpd.points_from_xy(df.Longitude, df.Latitude), crs="EPSG:4326"
-    )
-    return gdf
 
 
-def test_gdf2sql():
+def test_gdf2sql_gdf():
     gdf = generate_example_gdf()
     assert gdf is not None
     table = build_vtable("city_amlat", gdf)
+    assert table.rows is not None
+    result = str(table)
+    assert result is not None
+    assert "VALUES" in result
+    assert "'Buenos Aires'" in result
+    assert "::geometry" in result
+
+
+def test_gdf2sql_df():
+    df = generate_example_df()
+    assert df is not None
+    table = build_vtable("city_amlat", df)
     assert table.rows is not None
     result = str(table)
     assert result is not None

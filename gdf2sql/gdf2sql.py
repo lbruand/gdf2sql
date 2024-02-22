@@ -1,8 +1,9 @@
 from dataclasses import dataclass
 from numbers import Number
-from typing import List, Any
+from typing import List, Any, Union
 
 import geopandas as gpd
+import pandas as pd
 from shapely import Geometry, to_wkb
 
 
@@ -58,7 +59,7 @@ class VTable:
         return f"{self.header} {self.rows}"
 
 
-def build_vtable(tablename: str, gdf: gpd.GeoDataFrame) -> VTable:
+def build_vtable(tablename: str, gdf: Union[gpd.GeoDataFrame, pd.DataFrame]) -> VTable:
     return VTable(header=VHeader(tablename=tablename, colnames=gdf.columns),
                   rows=VRows(rows=[build_vrow(tuple) for tuple in gdf.itertuples()]))
 
