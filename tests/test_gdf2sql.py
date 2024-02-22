@@ -1,10 +1,8 @@
-import unittest
 from typing import List
 
 import geopandas as gpd
 import pandas as pd
 import psycopg2
-from sqlalchemy import create_engine
 
 from gdf2sql.gdf2sql import build_vtable, VTable, build_test_sql_query
 
