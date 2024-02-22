@@ -6,11 +6,6 @@ from pytest_postgres.plugin import create_container, catch_docker_error
 import psycopg2
 
 
-#def pytest_addoption(parser):
-#    parser.addoption('--pg-image', action='store', default='postgis/postgis',
-#                     help='Choose the postgis docker image name')
-
-
 def check_container_isup(postgis_params):
     delay_base = 0.2
     version_query = "select version();"
@@ -36,7 +31,7 @@ def postgis_server(docker, request):
     postgis_database = request.config.getoption('--pg-database')
 
     postgis_name = request.config.getoption('--pg-name')
-    postgis_image = 'postgis/postgis' #request.config.getoption('--pg-image')
+    postgis_image = 'postgis/postgis'
     postgis_resuse = request.config.getoption('--pg-reuse')
     postgis_network = request.config.getoption('--pg-network')
 
