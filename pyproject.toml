@@ -10,6 +10,8 @@ python = "^3.10"
 geopandas = "^0.14.3"
 sqlalchemy = "^2.0.25"
 geoalchemy2 = "^0.14.3"
+pytest-postgres = "^0.7.0"
+psycopg2-binary = "^2.9.9"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^6.0.0"

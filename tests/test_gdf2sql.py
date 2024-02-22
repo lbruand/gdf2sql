@@ -3,6 +3,8 @@ from typing import List
 
 import geopandas as gpd
 import pandas as pd
+import psycopg2
+from sqlalchemy import create_engine
 
 from gdf2sql.gdf2sql import build_vtable, VTable, build_test_sql_query
 
@@ -34,11 +36,24 @@ def test_gdf2sql():
     assert "'Buenos Aires'" in result
 
 
-def test_inject_queries():
-    inner_query = "WITH A(v) as (values (0), (1)) SELECT A.v, name, ST_AsText(geom)" \
-                  " FROM nyc_subway_stations, A " \
-                  "WHERE name = 'Broad St'"
+def test_inject_queries(postgis_server):
+    postgis_params = postgis_server['params']
+
+    inner_query = "WITH A(v) as (values (0), (1)) SELECT A.v, name, ST_AsText(geometry)" \
+                  " FROM nyc_subway_stats, A " \
+                  "WHERE nyc_subway_stats.name = 'Brasilia'"
     gdf = generate_example_gdf()
-    tables: List[VTable] = [(build_vtable("nyc_subway_stations", gdf))]
+    tables: List[VTable] = [(build_vtable("nyc_subway_stats", gdf))]
     result_query = build_test_sql_query(tables, inner_query)
+    print(result_query)
     assert result_query is not None
+
+    with psycopg2.connect(**postgis_params) as connection:
+        with connection.cursor() as cur:
+            cur.execute(result_query)
+            res = cur.fetchall()
+            assert len(res) == 2
+            city, *_ = res
+            ix, name, geom = city
+            assert name == 'Brasilia'
+
