@@ -10,7 +10,8 @@ def check_container_isup(postgis_params):
     delay_base = 0.2
     version_query = "select version();"
 
-    for delay in [ delay_base * (1 << i) for i in range(10)]:
+    for i in range(10):
+        delay = delay_base * (1 << i)
         try:
             with psycopg2.connect(**postgis_params) as connection:
                 with connection.cursor() as cur:
