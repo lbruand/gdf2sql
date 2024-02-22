@@ -43,7 +43,7 @@ def test_inject_queries(postgis_server):
     gdf = generate_example_gdf()
     tables: List[VTable] = [(build_vtable("nyc_subway_stats", gdf))]
     result_query = build_test_sql_query(tables, inner_query)
-    print(result_query)
+
     assert result_query is not None
 
     with psycopg2.connect(**postgis_params) as connection:
