@@ -1,3 +1,4 @@
+import random
 from dataclasses import dataclass
 from numbers import Number
 from typing import List, Any, Union
@@ -70,5 +71,6 @@ def build_vrow(tuple):
 
 
 def build_test_sql_query(tables: List[VTable], inner_query: str):
+    uuid = '%06x' % random.randrange(16**6)
     tables_str = ", ".join(str(table) for table in tables)
-    return f"WITH {tables_str}, INNERQUERY as ({inner_query}) SELECT * FROM INNERQUERY"
+    return f"WITH {tables_str}, INNERQUERY_{uuid} as ({inner_query}) SELECT * FROM INNERQUERY_{uuid}"
