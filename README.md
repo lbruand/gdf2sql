@@ -11,7 +11,17 @@ the table with fake data.
 
 As input, it accepts either geopandas dataframes or pandas dataframes.
 
+## Installation
 
+```
+pip install git+https://github.com/lbruand/gdf2sql#egg=gdf2sql
+```
+
+## Requirements
+
+ * python 3.5+
+ * pandas
+ * geopandas
 
 ## Code example
 
