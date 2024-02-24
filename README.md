@@ -45,7 +45,7 @@ WHERE nyc_subway_stats.name = 'Brasilia'
 
 Is transformed into :
 
-```
+```SQL
 WITH
 nyc_subway_stats(name, Country, Population, Latitude, Longitude, geometry) AS (VALUES
 ('Buenos Aires', 'Argentina', 20.0, -34.58, -58.66),
@@ -65,4 +65,5 @@ With two common table expressions :
 
  ## Benefits
 
- No need to update the underlying table which might be slow.
+ No need to update the underlying table before the test which might be slow. 
+ The data and the query are send to be tested inside the postgresql engine directly.
