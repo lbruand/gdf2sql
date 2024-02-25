@@ -79,9 +79,10 @@ def test_inject_queries_postgres_to_sqlite():
     inner_query = "WITH A(v) as (values (0), (1)) SELECT A.v, name " \
                   " FROM nyc_subway_stats, A " \
                   "WHERE nyc_subway_stats.name = 'Brasilia'"
+    inner_query_as_sqlite = sqlglot.transpile(inner_query, read="postgres", write="sqlite")[0]
+
     df = generate_example_df()
     tables: List[VTable] = [(build_vtable("nyc_subway_stats", df))]
-    inner_query_as_sqlite = sqlglot.transpile(inner_query, read="postgres", write="sqlite")[0]
     result_query = build_test_sql_query(tables, inner_query_as_sqlite)
 
     assert result_query is not None
