@@ -1,5 +1,7 @@
 # gdf2sql
 
+![GDF2SQL tests](https://github.com/github/docs/actions/workflows/python-package.yml/badge.svg)
+
 ## Goal
 
 Simplify testing of PostgresQL SQL queries
