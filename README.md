@@ -41,6 +41,10 @@ inner_query = "SELECT name, ST_AsText(geometry) " \
                   "FROM nyc_subway_stats " \
                   "WHERE nyc_subway_stats.name = 'Brasilia'"
 tables: List[VTable] = [(build_vtable("nyc_subway_stats", df))]
+result_query = build_test_sql_query(tables, inner_query)
+
+# Run the result query inside postgresql.
+# It will run as if there as a nyc_subway_stats table containing the `df` dataframe.
 ```
 
 ## How does it work under the hood : Injection
