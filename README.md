@@ -84,3 +84,8 @@ With two common table expressions :
  * No need to update the underlying table before the test (which might be slow).
  * The data and the query are send to be tested inside the postgresql engine directly.
  * gdf2sql is independent of the database considered. So you might decide to unittest in SQLite and then to test integration in postgresQL. ( Beware that SQLite and PostgresQL are different SQL dialect that might affect your queries.)
+
+## Why not use `to_sql` from pandas
+
+https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_sql.html
+To Be Continued
