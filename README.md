@@ -6,7 +6,7 @@
 
 Simplify testing of PostgresQL SQL queries
 
-The idea is to inject SQL code around the tested query to add mock tables over the actual tables.
+The idea is to inject mock tables as SQL code around the tested query to add mock tables overloading the actual tables.
 The good point is you don't need to modify the tables themselves.
 Under the hood, it uses *Common Table Expressions* using the keywords `WITH` to overload
 the table with fake data.
