@@ -6,7 +6,7 @@ authors = ["Lucas Bruand <l.bruand.pro@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.9"
 geopandas = "^0.14.3"
 sqlalchemy = "^2.0.25"
 geoalchemy2 = "^0.14.3"
