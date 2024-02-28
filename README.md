@@ -25,7 +25,7 @@ pip install git+https://github.com/lbruand/gdf2sql#egg=gdf2sql
  * pandas
  * geopandas
 
-## Code example
+## Code example Postgis
 
 ```python
 df = pd.DataFrame(
@@ -47,7 +47,7 @@ result_query = build_test_sql_query(tables, inner_query)
 # It will run as if there as a nyc_subway_stats table containing the `df` dataframe.
 ```
 
-## How does it work under the hood : Injection
+## How does it work under the hood : Injection - Postgis
 
 
 Let's take a query example :
@@ -76,6 +76,13 @@ With two common table expressions :
 
  * one for the mock table `nyc_subway_stats` that overrides the actual content of the real `nyc_subway_stats` ( which might not even exist)
  * one for the inner query A
+
+
+## Code example Postgres
+
+![Diagram](https://kroki.io/plantuml/svg/eNqtVFtPwjAUfu-vOPLilkCzDQnTCNEgCTHGGxrj01LpEZeMFtcZYoz_3bZjsM0pPriXXs75zvedS3eiMpZmb4uE7MOu7-Z-fPsI1xenlztdgex3_vPT6iZMvcC5jAWAM5MqGwQ9ehhS2g1pz4NUrtQg8DxYxTx70bvQtRlZ1EgKfgQOUo5Lne0CRRbFHAbAqzc5pDMEmOIrTGdMgBSAi2Ui3xEVYEHtUc-j1A_0Umf2uwfbMJZ9jfH71Dcgs-Sgvl-AwsAt1b8uYKtRAa9J-DGa07PXLiF7HJ9jgXC1xJRlsRSOYAt0YZYwpcDs4fgYnKu2TJmYa8NwuMEYCc3u0_Y8RRQVb5NuLObNgEn7HZNEriyCbMUYUGT66sIHgXXLorxlrZ0ta1nISFdEe5cnIjfc6hIYg7c-P5gC2YuwRT4JsfnpWkdmE42LThdSTpOYGTzm6Dv2lKA5Fn4V9tJQ_E6uR6SB_Gzb5To9r9KX5qFJgBmJioC-XxMQBpa_aJcteAP9OuzfA34vJHS4XAk90Jsuw5F9xIrUWRtdN883NrNCmopVxZUNORwVIScouPnHfQGCe1rH)
+
+<!--[Edit this diagram](https://niolesk.top/#https://kroki.io/plantuml/svg/eNqtVFtPwjAUfu-vOPLilkCzDQnTCNEgCTHGGxrj01LpEZeMFtcZYoz_3bZjsM0pPriXXs75zvedS3eiMpZmb4uE7MOu7-Z-fPsI1xenlztdgex3_vPT6iZMvcC5jAWAM5MqGwQ9ehhS2g1pz4NUrtQg8DxYxTx70bvQtRlZ1EgKfgQOUo5Lne0CRRbFHAbAqzc5pDMEmOIrTGdMgBSAi2Ui3xEVYEHtUc-j1A_0Umf2uwfbMJZ9jfH71Dcgs-Sgvl-AwsAt1b8uYKtRAa9J-DGa07PXLiF7HJ9jgXC1xJRlsRSOYAt0YZYwpcDs4fgYnKu2TJmYa8NwuMEYCc3u0_Y8RRQVb5NuLObNgEn7HZNEriyCbMUYUGT66sIHgXXLorxlrZ0ta1nISFdEe5cnIjfc6hIYg7c-P5gC2YuwRT4JsfnpWkdmE42LThdSTpOYGTzm6Dv2lKA5Fn4V9tJQ_E6uR6SB_Gzb5To9r9KX5qFJgBmJioC-XxMQBpa_aJcteAP9OuzfA34vJHS4XAk90Jsuw5F9xIrUWRtdN883NrNCmopVxZUNORwVIScouPnHfQGCe1rH)-->
 
 
 
