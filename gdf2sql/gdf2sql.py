@@ -23,7 +23,9 @@ class VValue:
     data: Any
 
     def __str__(self):
-        if isinstance(self.data, str):
+        if self.data is None:
+            return 'NULL'
+        elif isinstance(self.data, str):
             return f"'{self.data}'"
         elif isinstance(self.data, Number):
             return str(self.data)
