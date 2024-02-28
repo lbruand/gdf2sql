@@ -1,3 +1,4 @@
+import math
 import random
 from dataclasses import dataclass
 from numbers import Number
@@ -23,7 +24,7 @@ class VValue:
     data: Any
 
     def __str__(self):
-        if self.data is None:
+        if self.data is None or math.isnan(self.data):
             return 'NULL'
         elif isinstance(self.data, str):
             return f"'{self.data}'"
