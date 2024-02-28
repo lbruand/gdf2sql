@@ -24,12 +24,15 @@ class VValue:
     data: Any
 
     def __str__(self):
-        if self.data is None or math.isnan(self.data):
+        if self.data is None:
             return 'NULL'
         elif isinstance(self.data, str):
             return f"'{self.data}'"
         elif isinstance(self.data, Number):
-            return str(self.data)
+            if math.isnan(self.data):
+                return 'NULL'
+            else:
+                return str(self.data)
         elif isinstance(self.data, Geometry):
             return f"'{to_wkb(self.data, hex=True)}'::geometry"
         else:
