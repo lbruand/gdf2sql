@@ -21,7 +21,7 @@ def generate_example_gdf() -> gpd.GeoDataFrame:
 def generate_example_df() -> pd.DataFrame:
     return pd.DataFrame(
         {
-            "name": ["Buenos Aires", "Brasilia", "Santiago 'test'", "Bogota", "Caracas"],
+            "name": ["Buenos Aires", "Brasilia", "Santiago 'test\u2713'", "Bogota", "Caracas"],
             "Country": ["Argentina", "Brazil", "Chile", "Colombia", "Venezuela"],
             "Population": [20., 25., 9., 8., 5.],
             "Latitude": [-34.58, -15.78, -33.45, 4.60, 10.48],
@@ -40,6 +40,7 @@ def test_gdf2sql_gdf():
     assert "VALUES" in result
     assert "Buenos Aires" in result
     assert "::geometry" in result
+    assert '\u2713' in result
 
 
 def test_gdf2sql_df():
