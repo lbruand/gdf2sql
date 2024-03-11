@@ -61,6 +61,12 @@ def test_gdf2sql_df_unsanitary():
         table = build_vtable("city_@mlat@", df)
     assert str(error.value) == 'city_@mlat@ is unsanitary as an identifier'
 
+    df = df.rename(columns={'name': 'n@me'})
+    with pytest.raises(AssertionError) as error:
+        table = build_vtable("city_amlat", df)
+    assert str(error.value) == 'n@me is unsanitary as an identifier'
+
+
 
 def test_inject_queries(postgis_server):
     postgis_params = postgis_server['params']
