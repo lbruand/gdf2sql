@@ -6,7 +6,8 @@
 
 Simplify testing of PostgresQL SQL queries
 
-The idea is to inject mock tables as SQL code around the tested query to add mock tables overloading the actual tables.
+The idea is to inject mock tables as SQL code around the tested query.
+The mock tables will be effectively overloading the actual tables.
 The good point is you don't need to modify the tables themselves.
 Under the hood, it uses *Common Table Expressions* using the keywords `WITH` to overload
 the table name with fake data ( but the actual table stays unchanged ).
@@ -86,7 +87,7 @@ With two common table expressions :
 
  * No need to update the underlying table before the test (which might be slow).
  * The data and the query are send to be tested inside the postgresql engine directly.
- * gdf2sql is independent of the database considered. So you might decide to unittest in SQLite and then to test integration in postgresQL. ( Beware that SQLite and PostgresQL are different SQL dialect that might affect your queries. You want to use [sqlglot](https://github.com/tobymao/sqlglot) to convert from one to the other.)
+ * gdf2sql is independent of the database considered. So you might decide to unittest in SQLite and then to test integration in postgresQL. ( Beware that SQLite and PostgresQL are different SQL dialects. That fact might affect your queries. You want to use [sqlglot](https://github.com/tobymao/sqlglot) to convert from one to the other.)
  * This lets you test the functionnal characteristic of you queries, in particular, in the face of malformed data in your tables.
 
 
