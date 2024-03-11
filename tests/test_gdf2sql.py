@@ -58,7 +58,7 @@ def test_gdf2sql_df_unsanitary():
     assert df is not None
     with pytest.raises(AssertionError) as error:
         table = build_vtable("city_@mlat@", df)
-    assert str(error.value) == 'city_@mlat@ is sanitary as an identifier'
+    assert str(error.value) == 'city_@mlat@ is unsanitary as an identifier'
 
 
 def test_inject_queries(postgis_server):

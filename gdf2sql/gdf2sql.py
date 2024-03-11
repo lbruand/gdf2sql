@@ -23,9 +23,9 @@ class VHeader:
         return f'{self.tablename}({list_colnames})'
 
     def __post_init__(self):
-        assert identifier_regexp.match(self.tablename) is not None, f'{self.tablename} is sanitary as an identifier'
+        assert identifier_regexp.match(self.tablename) is not None, f'{self.tablename} is unsanitary as an identifier'
         for colname in self.colnames:
-            assert identifier_regexp.match(colname), f"{colname} is sanitary as an identifier"
+            assert identifier_regexp.match(colname), f"{colname} is unsanitary as an identifier"
 
 
 @dataclass(frozen=True)
