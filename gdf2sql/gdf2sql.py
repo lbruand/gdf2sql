@@ -1,5 +1,6 @@
 import math
 import random
+import re
 from dataclasses import dataclass
 from numbers import Number
 from typing import List, Any, Union
@@ -8,8 +9,11 @@ import geopandas as gpd
 import pandas as pd
 from shapely import Geometry, to_wkb
 
+identifier_regexp = re.compile(r"^[A-Za-z0-9_]+$")
+string_const = '$GDF2SQL$'
 
-@dataclass
+
+@dataclass(frozen=True)
 class VHeader:
     tablename: str
     colnames: List[str]
@@ -18,8 +22,13 @@ class VHeader:
         list_colnames = ", ".join( [ f"{colname}" for colname in self.colnames])
         return f'{self.tablename}({list_colnames})'
 
+    def __post_init__(self):
+        assert identifier_regexp.match(self.tablename) is not None, f'{self.tablename} is sanitary as an identifier'
+        for colname in self.colnames:
+            assert identifier_regexp.match(colname), f"{colname} is sanitary as an identifier"
 
-@dataclass
+
+@dataclass(frozen=True)
 class VValue:
     data: Any
 
@@ -27,7 +36,8 @@ class VValue:
         if self.data is None:
             return 'NULL'
         elif isinstance(self.data, str):
-            return f"'{self.data}'"
+
+            return f"{string_const}{self.data}{string_const}"
         elif isinstance(self.data, Number):
             if math.isnan(self.data):
                 return 'NULL'
@@ -39,7 +49,7 @@ class VValue:
             assert False, f"{self.data.__class__}"
 
 
-@dataclass
+@dataclass(frozen=True)
 class VRow:
     values: List[VValue]
 
@@ -48,7 +58,7 @@ class VRow:
         return f"({values})"
 
 
-@dataclass
+@dataclass(frozen=True)
 class VRows:
     rows: List[VRow]
 
@@ -57,7 +67,7 @@ class VRows:
         return f"AS (VALUES {rows_str})"
 
 
-@dataclass
+@dataclass(frozen=True)
 class VTable:
     header: VHeader
     rows: VRows
